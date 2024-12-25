@@ -18,7 +18,7 @@ import {
 import React, { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { verifySecret } from "@/lib/actions/user.actions";
+import { sendEmailOTP, verifySecret } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
 
 const OtpModal = ({
@@ -50,7 +50,9 @@ const OtpModal = ({
     setIsOpen(false);
   };
 
-  const handleResendOtp = async () => {};
+  const handleResendOtp = async () => {
+    await sendEmailOTP(email);
+  };
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
@@ -109,6 +111,7 @@ const OtpModal = ({
                 type={"button"}
                 variant={"link"}
                 className={"pl-1 text-brand"}
+                onClick={handleResendOtp}
               >
                 Click to resend
               </Button>
