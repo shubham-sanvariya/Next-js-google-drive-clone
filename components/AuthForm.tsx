@@ -133,15 +133,15 @@ const AuthForm = ({ type }: { type: FormType }) => {
           <div className={"body-2 flex justify-center"}>
             <p className={"text-light-100"}>
               {type === "sign-in"
-                ? "Already have an account?"
-                : "Don't hava an account?"}
+                ? "Don't hava an account?"
+                : "Already have an account?"}
             </p>
             <Link
               href={type === "sign-in" ? "/sign-up" : "/sign-in"}
               className="ml-1 font-medium text-brand"
             >
               {" "}
-              {type === "sign-in" ? "Sign In" : "Sign Up"}
+              {type === "sign-in" ? "Sign Up" : "Sign In"}
             </Link>
           </div>
         </form>
