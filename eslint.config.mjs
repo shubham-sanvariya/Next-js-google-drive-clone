@@ -17,6 +17,8 @@ const eslintConfig = [
     "plugin:tailwindcss/recommended",
     "prettier",
   ),
+  //   eslint-disable-next-line no-undef for interfaces that we are using to suppress warning
+  ...compat.rules({ "no-undef": "off" }),
 ];
 
 export default eslintConfig;
