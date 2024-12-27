@@ -113,7 +113,7 @@ export const getCurrentUser = async () => {
 
     return parseStringify(user.documents[0]);
   } catch (e) {
-    handleError(e, "Failed to get current user");
+    console.log(e);
   }
 };
 
