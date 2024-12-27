@@ -14,15 +14,19 @@ interface nameAndEmail {
 }
 
 const getUserByEmail = async (email: string) => {
-  const { databases } = await createAdminClient();
+  try {
+    const { databases } = await createAdminClient();
 
-  const result = await databases.listDocuments(
-    appWriteConfig.databaseId,
-    appWriteConfig.usersCollectionId,
-    [Query.equal("email", [email])],
-  );
+    const result = await databases.listDocuments(
+      appWriteConfig.databaseId,
+      appWriteConfig.usersCollectionId,
+      [Query.equal("email", [email])],
+    );
 
-  return result.total > 0 ? result.documents[0] : null;
+    return result.total > 0 ? result.documents[0] : null;
+  } catch (e) {
+    handleError(e, "error fetching user by email");
+  }
 };
 
 const handleError = (error: unknown, message: string) => {
@@ -94,19 +98,23 @@ export const verifySecret = async ({
 };
 
 export const getCurrentUser = async () => {
-  const { databases, account } = await createSessionClient();
+  try {
+    const { databases, account } = await createSessionClient();
 
-  const result = await account.get();
+    const result = await account.get();
 
-  const user = await databases.listDocuments(
-    appWriteConfig.databaseId,
-    appWriteConfig.usersCollectionId,
-    [Query.equal("accountId", result.$id)],
-  );
+    const user = await databases.listDocuments(
+      appWriteConfig.databaseId,
+      appWriteConfig.usersCollectionId,
+      [Query.equal("accountId", result.$id)],
+    );
 
-  if (user.total <= 0) return null;
+    if (user.total <= 0) return null;
 
-  return parseStringify(user.documents[0]);
+    return parseStringify(user.documents[0]);
+  } catch (e) {
+    handleError(e, "Failed to get current user");
+  }
 };
 
 export const signOutUser = async () => {
